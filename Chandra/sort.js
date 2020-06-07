@@ -47,6 +47,7 @@ function bubbleSort(arr) {
     if (noSwaps) break;
   }
   console.log(counter);
+  document.querySelector("#sort2").innerText = counter;
   return copyArr;
 }
 
@@ -66,6 +67,7 @@ function selectionSort(arr) {
     }
   }
   console.log(counter);
+  document.querySelector("#sort1").innerText = counter;
   return copyArr;
 }
 
@@ -89,12 +91,14 @@ document.getElementById("bubble2").style.display = "none";
 
 // On click, Sorting Algorithm Selected
 function myFunction() {
-  draw(selectionSort(data), "#bubblesort1", "red");
-  draw(bubbleSort(data), "#bubblesort2", "blue");
+  let count = 0;
+  let count2 = 0;
+  draw(selectionSort(data, count), "#bubblesort1", "red");
+  draw(bubbleSort(data, count2), "#bubblesort2", "blue");
   document.getElementById("bubble1").style.display = "block";
   document.getElementById("bubble2").style.display = "block";
-
+  console.log(count);
   //Display results
-  document.querySelector("#sort1").innerText = data.join(", ");
-  document.querySelector("#sort2").innerText = data.join(", ");
+ // document.querySelector("#sort1").innerText = data.join(", ");
+ // document.querySelector("#sort2").innerText = data.join(", ");
 }
