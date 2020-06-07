@@ -1,11 +1,14 @@
+// Orginal data array
 let data = [];
 
+// Random number array generator
 for (let i = 0; i < 10; i++) {
   let num = Math.random() * (250 - 50) + 20;
   data.push(Math.floor(num));
 }
 let unsortedData = [...data];
 
+// Drawing Function
 const draw = (bar, htmlId, color) => {
   const canvas = document.querySelector(htmlId);
   const ctx = canvas.getContext("2d");
@@ -25,58 +28,45 @@ const draw = (bar, htmlId, color) => {
   ctx.restore();
 };
 
-// Max Bubble Sort
-const bubbleSort1 = (arr) => {
+// Min Bubble sort
+function bubbleSort(arr) {
   let copyArr = [...arr];
   let counter = 0;
-  let swap = true;
-  do {
-    swap = false;
-    for (let i = 0; i < copyArr.length; i++) {
-      if (copyArr[i] < copyArr[i + 1]) {
-        counter++;
-        const tmp = copyArr[i];
-        copyArr[i] = copyArr[i + 1];
-        copyArr[i + 1] = tmp;
-        swap = true;
-      }
-    }
-  } while (swap);
-  console.log("Bubblesort1 :" + counter);
-  return copyArr;
-};
-
-// Min Bubble sort
-function bubbleSort2(arr) {
   let noSwaps;
-  for (let i = arr.length; i > 0; i--) {
+  for (let i = copyArr.length; i > 0; i--) {
     noSwaps = true;
     for (let j = 0; j < i - 1; j++) {
-      if (arr[j] > arr[j + 1]) {
-        let temp = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = temp;
+      if (copyArr[j] > copyArr[j + 1]) {
+        counter++;
+        let temp = copyArr[j];
+        copyArr[j] = copyArr[j + 1];
+        copyArr[j + 1] = temp;
         noSwaps = false;
       }
     }
     if (noSwaps) break;
   }
-  return arr;
+  console.log(counter);
+  return copyArr;
 }
 
 function selectionSort(arr) {
-  for (let i = 0; i < arr.length; i++) {
+  let copyArr = [...arr];
+  let counter = 0;
+  for (let i = 0; i < copyArr.length; i++) {
     let min = i;
-    for (let j = i + 1; j < arr.length; j++) {
-      if (arr[j] < arr[min]) min = j;
+    for (let j = i + 1; j < copyArr.length; j++) {
+      if (copyArr[j] < copyArr[min]) min = j;
     }
     if (i !== min) {
-      let temp = arr[i];
-      arr[i] = arr[min];
-      arr[min] = temp;
+      counter++;
+      let temp = copyArr[i];
+      copyArr[i] = copyArr[min];
+      copyArr[min] = temp;
     }
   }
-  return arr;
+  console.log(counter);
+  return copyArr;
 }
 
 function insertionSort(arr) {
@@ -99,8 +89,8 @@ document.getElementById("bubble2").style.display = "none";
 
 // On click, Sorting Algorithm Selected
 function myFunction() {
-  draw(bubbleSort1(data), "#bubblesort1", "red");
-  draw(bubbleSort2(data), "#bubblesort2", "blue");
+  draw(selectionSort(data), "#bubblesort1", "red");
+  draw(bubbleSort(data), "#bubblesort2", "blue");
   document.getElementById("bubble1").style.display = "block";
   document.getElementById("bubble2").style.display = "block";
 
