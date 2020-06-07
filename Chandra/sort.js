@@ -195,7 +195,9 @@ function randomize() {
 
 // Envoke sorting algorithms
 function myFunction() {
-  console.clear();
+  // Unsorted and Sorted console logs
+  console.log("Unsorted Array: [" + data + "]");
+  console.log("Sorted Array: [" + [...data].sort((a, b) => a - b) + "]");
   // Excecute sorting and drawing functions
   draw(selectionSort(data), "#selection-sort", "red");
   draw(bubbleSort(data), "#bubble-sort", "blue");
