@@ -8,19 +8,52 @@
   </head>
   <body>
     <center>
-      <button onClick="myFunction()">Click to sort!</button>
-      <h1>Unsorted</h1>
+      <br />
+      <button onClick="randomize()">Randomize numbers and sort!</button>
+      <h1>Unsorted Random Data</h1>
       <canvas id="unsorted" width="600" height="220"></canvas>
       <br />
-      <div id="bubble1">
-        <h1>Selection Sort Bar Chart</h1>
-        <canvas id="bubblesort1" width="600" height="220"></canvas>
-        <p>Number of loops = <span id="sort1"></span></p>
-      </div>
-      <div id="bubble2">
-        <h1>Bubble Sorted Bar Chart</h1>
-        <canvas id="bubblesort2" width="600" height="220"></canvas>
-        <p>Number of loops = <span id="sort2"></span></p>
+      <div id="grid">
+        <div id="selection-div">
+          <h1>Selection Sort</h1>
+          <canvas id="selection-sort" width="600" height="220"></canvas>
+          <p>
+            Number of iterations = <span id="selection-num"></span> <br />Time
+            duration = <span id="selection-time"></span>
+          </p>
+        </div>
+        <div id="bubble-div">
+          <h1>Bubble Sorted</h1>
+          <canvas id="bubble-sort" width="600" height="220"></canvas>
+          <p>
+            Number of iterations = <span id="bubble-num"></span> <br />Time
+            duration = <span id="bubble-time"></span>
+          </p>
+        </div>
+        <div id="insertion-div">
+          <h1>Insertion Sorted</h1>
+          <canvas id="insertion-sort" width="600" height="220"></canvas>
+          <p>
+            Number of iterations = <span id="insertion-num"></span> <br />Time
+            duration = <span id="insertion-time"></span>
+          </p>
+        </div>
+        <div id="quick-div">
+          <h1>Quick Sorted</h1>
+          <canvas id="quick-sort" width="600" height="220"></canvas>
+          <p>
+            Number of iterations = <span id="quick-num"></span> <br />Time
+            duration = <span id="quick-time"></span>
+          </p>
+        </div>
+        <div id="merge-div">
+          <h1>Merge Sorted</h1>
+          <canvas id="merge-sort" width="600" height="220"></canvas>
+          <p>
+            Number of iterations = <span id="merge-num"></span> <br />Time
+            duration = <span id="merge-time"></span>
+          </p>
+        </div>
       </div>
       <script src="sort.js"></script>
     </center>

@@ -3,10 +3,9 @@ let data = [];
 
 // Random number array generator
 for (let i = 0; i < 10; i++) {
-  let num = Math.random() * (250 - 50) + 20;
+  let num = Math.random() * (250 - 50) + 50;
   data.push(Math.floor(num));
 }
-let unsortedData = [...data];
 
 // Drawing Function
 const draw = (bar, htmlId, color) => {
@@ -17,6 +16,7 @@ const draw = (bar, htmlId, color) => {
     yPos = 0;
 
   ctx.save();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.clearRect(0, 0, 290, 220);
   ctx.fillStyle = color;
 
@@ -32,6 +32,7 @@ const draw = (bar, htmlId, color) => {
 function bubbleSort(arr) {
   let copyArr = [...arr];
   let counter = 0;
+  let start = window.performance.now();
   let noSwaps;
   for (let i = copyArr.length; i > 0; i--) {
     noSwaps = true;
@@ -46,14 +47,18 @@ function bubbleSort(arr) {
     }
     if (noSwaps) break;
   }
-  console.log(counter);
-  document.querySelector("#sort2").innerText = counter;
+
+  let stop = Math.round((window.performance.now() - start) * 1000);
+  console.log("BUBBLE SORT count: " + counter, "time: " + stop + " μs");
+  document.querySelector("#bubble-num").innerText = counter;
+  document.querySelector("#bubble-time").innerText = stop + " μs";
   return copyArr;
 }
 
 function selectionSort(arr) {
   let copyArr = [...arr];
   let counter = 0;
+  let start = window.performance.now();
   for (let i = 0; i < copyArr.length; i++) {
     let min = i;
     for (let j = i + 1; j < copyArr.length; j++) {
@@ -66,39 +71,142 @@ function selectionSort(arr) {
       copyArr[min] = temp;
     }
   }
-  console.log(counter);
-  document.querySelector("#sort1").innerText = counter;
+
+  let stop = Math.round((window.performance.now() - start) * 1000);
+  console.log("SELECTION SORT count: " + counter, "time: " + stop + " μs");
+  document.querySelector("#selection-num").innerText = counter;
+  document.querySelector("#selection-time").innerText = stop + " μs";
   return copyArr;
 }
 
 function insertionSort(arr) {
-  for (let i = 1; i < arr.length; i++) {
-    let current = arr[i];
+  let copyArr = [...arr];
+  let counter = 0;
+  let start = window.performance.now();
+  for (let i = 1; i < copyArr.length; i++) {
+    let current = copyArr[i];
     let j = i - 1;
-    for (; j >= 0 && arr[j] > current; j--) {
-      arr[j + 1] = arr[j];
+    for (; j >= 0 && copyArr[j] > current; j--) {
+      counter++;
+      copyArr[j + 1] = copyArr[j];
     }
-    arr[j + 1] = current;
+    copyArr[j + 1] = current;
   }
-
-  return arr;
+  let stop = Math.round((window.performance.now() - start) * 1000);
+  console.log("INSERTION SORT count: " + counter, "time: " + stop + " μs");
+  document.querySelector("#insertion-num").innerText = counter;
+  document.querySelector("#insertion-time").innerText = stop + " μs";
+  return copyArr;
 }
 
-draw(unsortedData, "#unsorted", "green");
+// Quick Sort
+function quickSort(arr) {
+  let counter = 0;
+  function quickSortInner(array) {
+    if (array.length <= 1) return array;
+    const pivot = array[array.length - 1];
+    const leftArr = [];
+    const rightArr = [];
 
-document.getElementById("bubble1").style.display = "none";
-document.getElementById("bubble2").style.display = "none";
+    for (const el of array.slice(0, array.length - 1)) {
+      el < pivot ? leftArr.push(el) : rightArr.push(el);
+      counter++;
+    }
 
-// On click, Sorting Algorithm Selected
+    return [...quickSortInner(leftArr), pivot, ...quickSortInner(rightArr)];
+  }
+  let start = window.performance.now();
+  let output = quickSortInner(arr);
+  let stop = Math.round((window.performance.now() - start) * 1000);
+  console.log("QUICK SORT count: " + counter, "time: " + stop + " μs");
+  document.querySelector("#quick-num").innerText = counter;
+  document.querySelector("#quick-time").innerText = stop + " μs";
+  return output;
+}
+
+function mergeSort(arr) {
+  let counter = 0;
+
+  //helper function
+  //leftArr and rightArr are sorted!
+  const merge = (leftArr, rightArr) => {
+    const output = [];
+    let leftIndex = 0;
+    let rightIndex = 0;
+
+    while (leftIndex < leftArr.length && rightIndex < rightArr.length) {
+      const leftEl = leftArr[leftIndex];
+      const rightEl = rightArr[rightIndex];
+
+      if (leftEl < rightEl) {
+        output.push(leftEl);
+        leftIndex++;
+      } else {
+        output.push(rightEl);
+        rightIndex++;
+      }
+      counter++;
+    }
+    return [
+      ...output,
+      ...leftArr.slice(leftIndex),
+      ...rightArr.slice(rightIndex),
+    ];
+  };
+
+  //recursive function
+  const mergeSortInner = (array) => {
+    if (array.length <= 1) return array;
+
+    const middleIndex = Math.floor(array.length / 2);
+    const leftArr = array.slice(0, middleIndex);
+    const rightArr = array.slice(middleIndex);
+
+    return merge(mergeSortInner(leftArr), mergeSortInner(rightArr));
+  };
+  let start = window.performance.now();
+  let output = mergeSortInner(arr);
+  let stop = Math.round((window.performance.now() - start) * 1000);
+  console.log("MERGE SORT count: " + counter, "time: " + stop + " μs");
+  document.querySelector("#merge-num").innerText = counter;
+  document.querySelector("#merge-time").innerText = stop + " μs";
+  return output;
+}
+
+// Display unsorted data
+draw(data, "#unsorted", "green");
+
+document.getElementById("selection-div").style.display = "none";
+document.getElementById("bubble-div").style.display = "none";
+document.getElementById("insertion-div").style.display = "none";
+document.getElementById("quick-div").style.display = "none";
+document.getElementById("merge-div").style.display = "none";
+
+//On click, randomize numbers
+function randomize() {
+  data = [];
+  for (let i = 0; i < 10; i++) {
+    let num = Math.random() * (250 - 50) + 50;
+    data.push(Math.floor(num));
+  }
+  draw(data, "#unsorted", "green");
+  myFunction();
+}
+
+// Envoke sorting algorithms
 function myFunction() {
-  let count = 0;
-  let count2 = 0;
-  draw(selectionSort(data, count), "#bubblesort1", "red");
-  draw(bubbleSort(data, count2), "#bubblesort2", "blue");
-  document.getElementById("bubble1").style.display = "block";
-  document.getElementById("bubble2").style.display = "block";
-  console.log(count);
-  //Display results
- // document.querySelector("#sort1").innerText = data.join(", ");
- // document.querySelector("#sort2").innerText = data.join(", ");
+  console.clear();
+  // Excecute sorting and drawing functions
+  draw(selectionSort(data), "#selection-sort", "red");
+  draw(bubbleSort(data), "#bubble-sort", "blue");
+  draw(insertionSort(data), "#insertion-sort", "orange");
+  draw(quickSort(data), "#quick-sort", "pink");
+  draw(mergeSort(data), "#merge-sort", "purple");
+
+  // Unhide divs
+  document.getElementById("selection-div").style.display = "block";
+  document.getElementById("bubble-div").style.display = "block";
+  document.getElementById("insertion-div").style.display = "block";
+  document.getElementById("quick-div").style.display = "block";
+  document.getElementById("merge-div").style.display = "block";
 }
