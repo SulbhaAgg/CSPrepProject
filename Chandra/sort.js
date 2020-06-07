@@ -5,7 +5,6 @@ for (let i = 0; i < 10; i++) {
   data.push(Math.floor(num));
 }
 let unsortedData = [...data];
-console.log(unsortedData);
 
 const draw = (bar, htmlId, color) => {
   const canvas = document.querySelector(htmlId);
@@ -28,11 +27,13 @@ const draw = (bar, htmlId, color) => {
 
 // Max Bubble Sort
 const bubbleSort1 = (arr) => {
+  let counter = 0;
   let swap = true;
   do {
     swap = false;
     for (let i = 0; i < arr.length; i++) {
       if (arr[i] < arr[i + 1]) {
+        counter++;
         const tmp = arr[i];
         arr[i] = arr[i + 1];
         arr[i + 1] = tmp;
@@ -40,16 +41,19 @@ const bubbleSort1 = (arr) => {
       }
     }
   } while (swap);
+  console.log("Bubblesort1 :" + counter);
   return arr;
 };
 
 // Min Bubble sort
 function bubbleSort2(arr) {
+  let counter = 0;
   let noSwaps;
   for (let i = arr.length; i > 0; i--) {
     noSwaps = true;
     for (let j = 0; j < i - 1; j++) {
       if (arr[j] > arr[j + 1]) {
+        counter++;
         let temp = arr[j];
         arr[j] = arr[j + 1];
         arr[j + 1] = temp;
@@ -58,6 +62,7 @@ function bubbleSort2(arr) {
     }
     if (noSwaps) break;
   }
+  console.log("bubbleSort2:" + counter);
   return arr;
 }
 
