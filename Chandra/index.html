@@ -1,7 +1,28 @@
-<h1>Bubble Sorted Bar Chart</h1>
-<canvas id="bubblesort1" width="650" height="220"></canvas>
-<p>Bubble sorted = <span></span></p>
-
-<h1>Bubble Sorted Bar Chart</h1>
-<canvas id="bubblesort2" width="650" height="220"></canvas>
-<p id="sort2">Bubble sorted2 = <span></span></p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <center>
+      <button onClick="myFunction()">Click to sort!</button>
+      <h1>Unsorted</h1>
+      <canvas id="unsorted" width="600" height="220"></canvas>
+      <br />
+      <div id="bubble1">
+        <h1>Bubble Sorted Bar Chart</h1>
+        <canvas id="bubblesort1" width="600" height="220"></canvas>
+        <p>Number of loops = <span id="sort1"></span></p>
+      </div>
+      <div id="bubble2">
+        <h1>Bubble Sorted Bar Chart</h1>
+        <canvas id="bubblesort2" width="600" height="220"></canvas>
+        <p>Number of loops = <span id="sort2"></span></p>
+      </div>
+      <script src="sort.js"></script>
+    </center>
+  </body>
+</html>
